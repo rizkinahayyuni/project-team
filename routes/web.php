@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/home', function () {
-//     return view('home');
-// });
+Route::get('/', function () {
+    // return view('home');
+    return redirect()->route('home.index');
+});
 
 Route::resource('/home', \App\Http\Controllers\HomeController::class);
 Route::resource('/users', \App\Http\Controllers\UserController::class);

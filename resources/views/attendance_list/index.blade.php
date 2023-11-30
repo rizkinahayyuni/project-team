@@ -26,21 +26,6 @@
                                 class="fa fa-plus"></i> Add Attendance</a>
                     </div>
                     <div class="card-tools">
-                        {{-- <form class="float-right form-inline" id="searchForm" method="get"
-                            action="{{ route('attendance_list.index') }}" role="search">
-                            <div class="input-group date" id="keyword_date" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#keyword_date"
-                                    name="keyword_date" value="{{request()->query('keyword_date')}}" />
-                                <div class="input-group-append" data-target="#keyword_date"
-                                    data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary mx-2">Cari</button>
-                            <a href="{{ route('attendance_list.index') }}">
-                                <button type="button" class="btn btn-danger">Reset</button>
-                            </a>
-                        </form> --}}
                     </div>
                 </div>
             </div>
@@ -87,12 +72,13 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    {{ $datas->links() }}
+                    {{-- <div class="d-flex"> --}}
+                        {{ $datas->links() }}
+                    </div>
                 </div>
+                <!-- /.card-body -->
             </div>
-            <!-- /.card-body -->
+            <!-- /.card -->
         </div>
-        <!-- /.card -->
-    </div>
 </section>
 @endsection

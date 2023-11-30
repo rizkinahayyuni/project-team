@@ -40,13 +40,6 @@
                                 <option value="{{$data}}" {{ ( $filter_year==$data) ? 'selected' : '' }}>{{$data}}
                                 </option>
                                 @endforeach
-                                {{-- <option value="2021" {{ ( $filter_year=='2021' ) ? 'selected' : '' }}>2021</option>
-                                <option value="2022" {{ ( \Carbon\Carbon::now()->year == '2022') ? 'selected'
-                                    : '' }}>2022</option>
-                                <option value="2023" {{ ( \Carbon\Carbon::now()->year == '2023') ? 'selected'
-                                    : '' }}>2023</option>
-                                <option value="2024" {{ ( \Carbon\Carbon::now()->year == '2024') ? 'selected'
-                                    : '' }}>2024</option> --}}
                             </select>
                             <button type="submit" class="btn btn-primary mx-2">Cari</button>
                         </form>
@@ -77,11 +70,11 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                {{-- <div class="float-right">
+            {{-- <div class="card-footer">
+                <div class="float-right">
                     {{ $datas->links() }}
-                </div> --}}
-            </div>
+                </div>
+            </div> --}}
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
