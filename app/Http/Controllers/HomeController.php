@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AttendanceList;
+use App\Models\AttendanceMonth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -33,23 +34,29 @@ class HomeController extends Controller
             "11" => "Nov",
             "12" => "Des",
         );
-        $datas = AttendanceList::
-            select('attendance_date', DB::raw('count(total_hour) as total_hour'))
-            ->where([
-                ['attendance_date', '!=', Null],
-                [
-                    function ($query) use ($request) {
-                        if (($keyword = $request->keyword)) {
-                            $query->orWhere('name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('email', 'LIKE', '%' . $keyword . '%')->get();
-                        }
-                    }
-                ]
-            ])
-            ->orderBy("id", "desc")
-            ->groupBy('attendance_date', 'id')
-            ->paginate(10);
-        return view('home', compact('datas', 'months'))
+        $years = array('2021', '2022', '2023', '2024');
+        $filter_month = ($request->get('filter_month')) ? $request->get('filter_month') : Carbon::now()->month;
+        $filter_year = ($request->get('filter_year')) ? $request->get('filter_year') : Carbon::now()->year;
+
+        // Get total day in month
+        $count = 0;
+        $ignore = array(0, 6);
+        $counter = mktime(0, 0, 0, $filter_month, 1, $filter_year);
+        while (date("n", $counter) == $filter_month) {
+            // $count++;
+            if (in_array(date("w", $counter), $ignore) == false) {
+                $count++;
+            }
+            $counter = strtotime("+1 day", $counter);
+        }
+
+        $total_day = $count;
+
+        $datas = AttendanceMonth::where([
+            ['month_date', '=', $filter_month],
+            ['year_date', '=', $filter_year]
+        ])->get();
+        return view('home', compact('datas', 'months', 'years', 'total_day', 'filter_month', 'filter_year'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

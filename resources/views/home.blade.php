@@ -22,20 +22,33 @@
                 <div class="container-fluid">
                     <div class="card-tools">
                         <form class="float-right form-inline" id="searchForm" method="get"
-                            action="{{ route('attendance_list.index') }}" role="search">
-                            <select id="user_id"
-                                class="form-control custom-select @error('user_id') is-invalid @enderror" name="user_id"
-                                required>
+                            action="{{ route('home.index') }}" role="search">
+                            <select id="filter_month"
+                                class="mx-2 form-control custom-select @error('filter_month') is-invalid @enderror"
+                                name="filter_month" required>
                                 <option selected disabled>Select Month</option>
                                 @foreach($months as $key => $data)
-                                <option value="{{$key}}" {{ ( \Carbon\Carbon::now()->month == $key) ? 'selected'
-                                    : '' }}>{{$data}}</option>
+                                <option value="{{$key}}" {{ ( $filter_month==$key) ? 'selected' : '' }}>{{$data}}
+                                </option>
                                 @endforeach
                             </select>
+                            <select id="filter_year"
+                                class="form-control custom-select @error('filter_year') is-invalid @enderror"
+                                name="filter_year" required>
+                                <option selected disabled>Select Year</option>
+                                @foreach($years as $data)
+                                <option value="{{$data}}" {{ ( $filter_year==$data) ? 'selected' : '' }}>{{$data}}
+                                </option>
+                                @endforeach
+                                {{-- <option value="2021" {{ ( $filter_year=='2021' ) ? 'selected' : '' }}>2021</option>
+                                <option value="2022" {{ ( \Carbon\Carbon::now()->year == '2022') ? 'selected'
+                                    : '' }}>2022</option>
+                                <option value="2023" {{ ( \Carbon\Carbon::now()->year == '2023') ? 'selected'
+                                    : '' }}>2023</option>
+                                <option value="2024" {{ ( \Carbon\Carbon::now()->year == '2024') ? 'selected'
+                                    : '' }}>2024</option> --}}
+                            </select>
                             <button type="submit" class="btn btn-primary mx-2">Cari</button>
-                            <a href="{{ route('attendance_list.index') }}">
-                                <button type="button" class="btn btn-danger">Reset</button>
-                            </a>
                         </form>
                     </div>
                 </div>
@@ -44,19 +57,21 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th>Month</th>
+                            <th>Year</th>
+                            <th>Name</th>
                             <th>Total Present</th>
-                            <th>Total Absent</th>
-                            <th>Percentage</th>
+                            <th>Result Present in Month</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($datas as $data)
                         <tr>
-                            <td>{{$data->attendance_date}}</td>
-                            <td>{{$data->total_hour}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{$data->month_date}}</td>
+                            <td>{{$data->year_date}}</td>
+                            <td>{{$data->user_name}}</td>
+                            <td>{{$data->total_present}}</td>
+                            <td>{{$data->total_present}}/{{$total_day}}</td>
                         </tr>
                         @endforeach
                     </tbody>

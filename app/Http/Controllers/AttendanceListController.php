@@ -97,7 +97,10 @@ class AttendanceListController extends Controller
         $attendance_list = AttendanceList::find($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'attendance_date' => 'required',
+            'total_hour' => 'required|numeric|gt:0',
+            'user_id' => 'required|exists:users,id',
+            'project_id' => 'required|exists:projects,id',
         ]);
 
         if ($validator->fails()) {
@@ -105,7 +108,10 @@ class AttendanceListController extends Controller
             return redirect()->back();
         }
 
-        $attendance_list->name = $request['name'];
+        $attendance_list->attendance_date = $request['attendance_date'];
+        $attendance_list->total_hour = $request['total_hour'];
+        $attendance_list->user_id = $request['user_id'];
+        $attendance_list->project_id = $request['project_id'];
         $attendance_list->update();
 
         alert()->success('Success.', 'Successfully update data!');
